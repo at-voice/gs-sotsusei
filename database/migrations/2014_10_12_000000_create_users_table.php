@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->tinyInteger('type')->default(0); // 追加 (0 for fan and 1 for comedian)
             $table->rememberToken();
             $table->timestamps();
         });
