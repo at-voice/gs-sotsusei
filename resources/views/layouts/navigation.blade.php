@@ -1,4 +1,5 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -16,6 +17,45 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+
+
+                @if(auth()->check() && auth()->user()->type === 0) <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('test1')" :active="request()->routeIs('test1')">
+                        {{ __('Test1') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('test2')" :active="request()->routeIs('test2')">
+                        {{ __('Test2') }}
+                    </x-nav-link>
+                </div>
+                @elseif (auth()->check() && auth()->user()->type === 1)
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('test3')" :active="request()->routeIs('test3')">
+                        {{ __('Test3') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('test4')" :active="request()->routeIs('test4')">
+                        {{ __('Test4') }}
+                    </x-nav-link>
+                </div>
+                @endif
+
+
+                <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('test1')" :active="request()->routeIs('test1')">
+                        {{ __('Test1') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('test2')" :active="request()->routeIs('test2')">
+                        {{ __('Test2') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('test3')" :active="request()->routeIs('test3')">
+                        {{ __('Test3') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('test4')" :active="request()->routeIs('test4')">
+                        {{ __('Test4') }}
+                    </x-nav-link>
+                </div> -->
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -42,8 +82,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -88,8 +127,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>

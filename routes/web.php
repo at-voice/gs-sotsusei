@@ -40,21 +40,21 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth', 'user_type:0'])->group(function () {
     Route::get('/test1', function () {
         return view('test1');
-    });
+    })->name('test1');
 
     Route::get('/test2', function () {
         return view('test2');
-    });
+    })->name('test2');
 });
 
 Route::middleware(['auth', 'user_type:1'])->group(function () {
     Route::get('/test3', function () {
         return view('test3');
-    });
+    })->name('test3');
 
     Route::get('/test4', function () {
         return view('test4');
-    });
+    })->name('test4');
 });
 
 // Laravel Breeze のデフォルトルート
