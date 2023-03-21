@@ -26,6 +26,9 @@
                     <x-nav-link :href="route('test2')" :active="request()->routeIs('test2')">
                         {{ __('Test2') }}
                     </x-nav-link>
+                    <x-nav-link>
+                        {{ __('あなたはファンです') }}
+                    </x-nav-link>
                 </div>
                 @elseif (auth()->check() && auth()->user()->type === 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -34,6 +37,9 @@
                     </x-nav-link>
                     <x-nav-link :href="route('test4')" :active="request()->routeIs('test4')">
                         {{ __('Test4') }}
+                    </x-nav-link>
+                    <x-nav-link>
+                        {{ __('あなたは芸人です') }}
                     </x-nav-link>
                 </div>
                 @endif
