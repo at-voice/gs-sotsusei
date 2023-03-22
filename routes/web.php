@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\RegisterController; //会員登録
+use App\Http\Controllers\IdeaWordController; //ファン会員の投稿データを扱う
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    //
 });
 
 require __DIR__ . '/auth.php';
@@ -60,9 +65,13 @@ Route::middleware(['auth', 'user_type:1'])->group(function () {
 // Laravel Breeze のデフォルトルート
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'create'])->name('login');
-    Route::get('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register');
+    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [RegisterController::class, 'register'])->name('register.post'); // ポストルートを追加
 }); //guest=>ログインしていない場合のルート
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
-});//auth=>ログインしている場合のルート
+}); //auth=>ログインしている場合のルート
+
+Route::resource('netacho', IdeaWordController::class);
+//仮置き
