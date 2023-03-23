@@ -79,5 +79,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
 }); //auth=>ログインしている場合のルート
 
-Route::resource('netacho', IdeaWordController::class);
+// Route::resource('netacho', IdeaWordController::class);
 //仮置き
