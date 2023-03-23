@@ -50,6 +50,12 @@ Route::middleware(['auth', 'user_type:0'])->group(function () {
     Route::get('/test2', function () {
         return view('test2');
     })->name('test2');
+
+    // ネタ帳
+    Route::get('/for_fan/netacho', [IdeaWordController::class, 'index'])->name('idea_words.index');
+    Route::get('/for_fan/netacho/create', [IdeaWordController::class, 'create'])->name('idea_words.create'); // 追加
+    Route::post('/for_fan/netacho', [IdeaWordController::class, 'store'])->name('idea_words.store');
+    Route::get('/for_fan/netacho/{id}', [IdeaWordController::class, 'show'])->name('idea_words.show');
 });
 
 Route::middleware(['auth', 'user_type:1'])->group(function () {
