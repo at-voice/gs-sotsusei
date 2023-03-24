@@ -52,10 +52,10 @@ Route::middleware(['auth', 'user_type:0'])->group(function () {
     })->name('test2');
 
     // ネタ帳
-    Route::get('/for_fan/netacho', [IdeaWordController::class, 'index'])->name('idea_words.index');
-    Route::get('/for_fan/netacho/create', [IdeaWordController::class, 'create'])->name('idea_words.create'); // 追加
-    Route::post('/for_fan/netacho', [IdeaWordController::class, 'store'])->name('idea_words.store');
-    Route::get('/for_fan/netacho/{id}', [IdeaWordController::class, 'show'])->name('idea_words.show');
+    // Route::get('/for_fan/netacho', [IdeaWordController::class, 'index'])->name('idea_words.index');
+    // Route::get('/for_fan/netacho/create', [IdeaWordController::class, 'create'])->name('idea_words.create'); // 追加
+    // Route::post('/for_fan/netacho', [IdeaWordController::class, 'store'])->name('idea_words.store');
+    // Route::get('/for_fan/netacho/{id}', [IdeaWordController::class, 'show'])->name('idea_words.show');
 });
 
 Route::middleware(['auth', 'user_type:1'])->group(function () {
@@ -75,9 +75,16 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/register', [RegisterController::class, 'register'])->name('register.post'); // ポストルートを追加
 }); //guest=>ログインしていない場合のルート
 
+// ログイン会員のみ可能なルート
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
-}); //auth=>ログインしている場合のルート
 
-// Route::resource('netacho', IdeaWordController::class);
-//仮置き
+    // そのうちファン会員のみ可能
+    Route::middleware(['user_type:0'])->group(function () {
+        // ネタ帳
+        Route::get('/for_fan/netacho', [IdeaWordController::class, 'index'])->name('idea_words.index');
+        Route::get('/for_fan/netacho/create', [IdeaWordController::class, 'create'])->name('idea_words.create');
+        Route::post('/for_fan/netacho', [IdeaWordController::class, 'store'])->name('idea_words.store');
+        Route::get('/for_fan/netacho/{id}', [IdeaWordController::class, 'show'])->name('idea_words.show');
+    });
+}); //auth=>ログインしている場合のルート
