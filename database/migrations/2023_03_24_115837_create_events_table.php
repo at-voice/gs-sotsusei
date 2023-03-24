@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('organizer_name')->nullable();
             $table->decimal('price', 8, 2); //全体8桁のうち小数点以下2桁までの数値を格納可
             $table->unsignedBigInteger('user_id');
+            $table->dateTime('display_until'); //いつまで表示するか
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
