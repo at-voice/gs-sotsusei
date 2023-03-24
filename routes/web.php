@@ -87,4 +87,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/for_fan/netacho', [IdeaWordController::class, 'store'])->name('idea_words.store');
         Route::get('/for_fan/netacho/{id}', [IdeaWordController::class, 'show'])->name('idea_words.show');
     });
+
+    // そのうち芸人会員のみ可能
+    Route::middleware(['user_type:1'])->group(function () {
+        // ネタ帳
+        Route::get('/for_comedian/netacho', [IdeaWordController::class, 'index_for_comedian'])->name('idea_words.index_for_comedian'); //一覧を見る
+    });
+    //
 }); //auth=>ログインしている場合のルート
