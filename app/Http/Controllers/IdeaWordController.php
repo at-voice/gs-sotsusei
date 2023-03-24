@@ -13,12 +13,28 @@ class IdeaWordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index_for_fan()
     {
         //
         $idea_words = IdeaWord::where('user_id', Auth::id())->latest()->get();
         return view('for_fan.netacho.index', compact('idea_words'));
     }
+    //ファン会員のnetacho/indexに一覧表示する
+
+    public function index_for_comedian(Request $request)
+    {
+        $order = $request->input('order');
+
+        if ($order === 'random') {
+            // 芸人向けの一覧はランダム順で表示し、すべての投稿を取得
+            $idea_words = IdeaWord::inRandomOrder()->get();
+        } else {
+            // 芸人向けの一覧は最新順で表示し、すべての投稿を取得
+            $idea_words = IdeaWord::latest()->get();
+        }
+        return view('for_comedian.netacho.index', compact('idea_words'));
+    }
+    //芸人会員のnetacho/indexに一覧表示する（新着順・ランダム）
 
     /**
      * Show the form for creating a new resource.

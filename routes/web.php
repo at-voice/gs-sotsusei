@@ -82,7 +82,7 @@ Route::middleware(['auth'])->group(function () {
     // そのうちファン会員のみ可能
     Route::middleware(['user_type:0'])->group(function () {
         // ネタ帳
-        Route::get('/for_fan/netacho', [IdeaWordController::class, 'index'])->name('idea_words.index');
+        Route::get('/for_fan/netacho', [IdeaWordController::class, 'index_for_fan'])->name('idea_words.index_for_fan');
         Route::get('/for_fan/netacho/create', [IdeaWordController::class, 'create'])->name('idea_words.create');
         Route::post('/for_fan/netacho', [IdeaWordController::class, 'store'])->name('idea_words.store');
         Route::get('/for_fan/netacho/{id}', [IdeaWordController::class, 'show'])->name('idea_words.show');
