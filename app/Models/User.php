@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type', //Add (0 for fan and 1 for comedian)
     ];
 
     /**
@@ -42,3 +43,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 }
+
+/**
+ * The attributes that should be cast to native types.
+ *
+ * @var array
+ */
+// protected function type(): Attribute {
+//     return new Attribute(get: fn ($value) => ["user", "admin", "superadmin"][$value],);
+// }
+// 何か問題が起きたらここをコメントアウトする
