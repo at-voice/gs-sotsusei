@@ -64,7 +64,7 @@ class IdeaWordController extends Controller
             'user_id' => auth()->user()->id
         ]);
 
-        return redirect()->route('idea_words.index');
+        return redirect()->route('idea_words.index_for_fan');
     }
 
     /**
