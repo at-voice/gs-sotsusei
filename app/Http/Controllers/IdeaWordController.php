@@ -27,12 +27,15 @@ class IdeaWordController extends Controller
 
         if ($order === 'random') {
             // 芸人向けの一覧はランダム順で表示し、すべての投稿を取得
-            $idea_words = IdeaWord::inRandomOrder()->get();
+            $idea_words = IdeaWord::inRandomOrder()->paginate(10);
         } else {
             // 芸人向けの一覧は最新順で表示し、すべての投稿を取得
-            $idea_words = IdeaWord::latest()->get();
+            $idea_words = IdeaWord::latest()->paginate(10);
         }
-        return view('for_comedian.netacho.index', compact('idea_words'));
+        return view('for_comedian.netacho.index', compact(
+            'idea_words',
+            'order'
+        ));
     }
     //芸人会員のnetacho/indexに一覧表示する（新着順・ランダム）
 
