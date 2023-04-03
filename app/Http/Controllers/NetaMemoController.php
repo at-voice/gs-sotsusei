@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\NetaMemo;
 use App\Models\IdeaWord;
+use Illuminate\Support\Facades\Auth;
+
 
 class NetaMemoController extends Controller
 {
@@ -58,5 +60,16 @@ class NetaMemoController extends Controller
         }
 
         return view('for_comedian.netacho.index', compact('idea_words'));
+    }
+
+    // my memosを一覧表示
+    public function my_memos_for_comedian()
+    {
+        $user = Auth::user(); // 現在のログインユーザーを取得
+        $my_memos = $user->neta_memos; // ログインユーザーのメモを取得（リレーションを使って取得）
+
+        // dd($my_memos);
+
+        return view('for_comedian.netacho.my_memos', compact('my_memos')); // my_memosビューにデータを渡す
     }
 }

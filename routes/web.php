@@ -96,6 +96,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/for_comedian/netacho', [IdeaWordController::class, 'index_for_comedian'])->name('idea_words.index_for_comedian'); //一覧を見る
         Route::post('/for_comedian/netacho', [NetaMemoController::class, 'store'])->name('neta_memos.store');
         Route::post('/for_comedian/netacho', [\App\Http\Controllers\NetaMemoController::class, 'store'])->name('neta_memos.store');
+
+        // my memos
+        Route::get('/for_comedian/netacho/my_memos', [NetaMemoController::class, 'my_memos_for_comedian'])->name('neta_memos.my_memos_for_comedian');
+        // クラス指定はルール
     });
     //
 }); //auth=>ログインしている場合のルート
