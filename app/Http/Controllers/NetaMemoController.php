@@ -63,13 +63,19 @@ class NetaMemoController extends Controller
     }
 
     // my memosを一覧表示
-    public function my_memos_for_comedian()
+    public function my_memos_for_comedian(Request $request)
     {
-        $user = Auth::user(); // 現在のログインユーザーを取得
-        $my_memos = $user->neta_memos; // ログインユーザーのメモを取得（リレーションを使って取得）
+        $user_id = auth()->id(); // 現在のログインユーザーのIDを取得
+        $order = $request->input('order', 'new_to_old'); // デフォルトの並べ替え方法を'new_to_old'に設定
 
-        // dd($my_memos);
+        if ($order === 'old_to_new') {
+            $neta_memos = NetaMemo::where('user_id', $user_id)->orderBy('created_at', 'asc')->get();
+        } elseif ($order === 'random') {
+            $neta_memos = NetaMemo::where('user_id', $user_id)->inRandomOrder()->get();
+        } else {
+            $neta_memos = NetaMemo::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
+        }
 
-        return view('for_comedian.netacho.my_memos', compact('my_memos')); // my_memosビューにデータを渡す
+        return view('for_comedian.netacho.my_memos', compact('neta_memos')); // my_memosビューにデータを渡す
     }
 }

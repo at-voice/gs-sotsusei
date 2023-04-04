@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController; //会員登録
 use App\Http\Controllers\IdeaWordController; //ファン会員の投稿データを扱う
 use App\Http\Controllers\NetaMemoController;
+use App\Http\Controllers\WorkInfoController;
 
 
 
@@ -95,11 +96,11 @@ Route::middleware(['auth'])->group(function () {
         // ネタ帳
         Route::get('/for_comedian/netacho', [IdeaWordController::class, 'index_for_comedian'])->name('idea_words.index_for_comedian'); //一覧を見る
         Route::post('/for_comedian/netacho', [NetaMemoController::class, 'store'])->name('neta_memos.store');
-        Route::post('/for_comedian/netacho', [\App\Http\Controllers\NetaMemoController::class, 'store'])->name('neta_memos.store');
+        // Route::post('/for_comedian/netacho', [\App\Http\Controllers\NetaMemoController::class, 'store'])->name('neta_memos.store');
 
         // my memos
-        Route::get('/for_comedian/netacho/my_memos', [NetaMemoController::class, 'my_memos_for_comedian'])->name('neta_memos.my_memos_for_comedian');
-        // クラス指定はルール
+        Route::get('/for_comedian/netacho/my_memos', [NetaMemoController::class, 'my_memos_for_comedian'])->name('neta_memos.my_memos_for_comedian');        // 一覧表示と並べ替え クラス指定はルール
+        Route::post('/work_infos', [\App\Http\Controllers\WorkInfoController::class, 'store'])->name('work_infos.store');
     });
     //
 }); //auth=>ログインしている場合のルート
