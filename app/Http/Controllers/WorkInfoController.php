@@ -131,4 +131,22 @@ class WorkInfoController extends Controller
             return back()->withInput()->withErrors(['error' => 'データの登録に失敗しました。']);
         }
     }
+
+    public function our_work(Request $request)
+    {
+        // ログインユーザーのIDを取得
+        $user_id = auth()->user()->id;
+
+        // content*_posted_by カラムがログインユーザーのIDと一致するデータを取得
+        $work_infos = WorkInfo::where('content1_posted_by', $user_id)
+            ->orWhere('content2_posted_by', $user_id)
+            ->orWhere('content3_posted_by', $user_id)
+            ->orWhere('content4_posted_by', $user_id)
+            ->orWhere('content5_posted_by', $user_id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // our_work.blade.php にデータを渡して表示
+        return view('for_fan.our_work', compact('work_infos'));
+    }
 }

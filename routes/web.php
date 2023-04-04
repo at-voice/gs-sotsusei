@@ -89,6 +89,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/for_fan/netacho/create', [IdeaWordController::class, 'create'])->name('idea_words.create');
         Route::post('/for_fan/netacho', [IdeaWordController::class, 'store'])->name('idea_words.store');
         Route::get('/for_fan/netacho/{id}', [IdeaWordController::class, 'show'])->name('idea_words.show');
+
+        // our_work一覧
+        Route::get('/for_fan/our_work', [WorkInfoController::class, 'our_work'])->name('work_infos.our_work');
     });
 
     // そのうち芸人会員のみ可能

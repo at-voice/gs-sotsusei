@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\IdeaWord; //our_workに使用
+
 class WorkInfo extends Model
 {
     use HasFactory;
@@ -30,4 +32,29 @@ class WorkInfo extends Model
         'event_type',
         'event_organizer',
     ];
+
+    public function content1()
+    {
+        return $this->belongsTo(IdeaWord::class, 'content1_id');
+    }
+
+    public function content2()
+    {
+        return $this->belongsTo(IdeaWord::class, 'content2_id')->withDefault();
+    }
+
+    public function content3()
+    {
+        return $this->belongsTo(IdeaWord::class, 'content3_id')->withDefault();
+    }
+
+    public function content4()
+    {
+        return $this->belongsTo(IdeaWord::class, 'content4_id')->withDefault();
+    }
+
+    public function content5()
+    {
+        return $this->belongsTo(IdeaWord::class, 'content5_id')->withDefault();
+    }
 }
