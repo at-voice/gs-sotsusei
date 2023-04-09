@@ -1,4 +1,8 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+@php
+$navClass = auth()->user()->type === 0 ? 'bg-yellow-400 dark:bg-yellow-600' : 'bg-blue-400 dark:bg-blue-600';
+@endphp
+
+<nav x-data="{ open: false }" class="{{ $navClass }} ">
 
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,49 +22,25 @@
                     </x-nav-link>
                 </div>
 
-
-                @if(auth()->check() && auth()->user()->type === 0) <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('test1')" :active="request()->routeIs('test1')">
-                        {{ __('Test1') }}
+                @if(auth()->check() && auth()->user()->type === 0)
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('idea_words.index_for_fan')" :active="request()->routeIs('idea_words.index_for_fan')">
+                        {{ __('ネタ帳') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('test2')" :active="request()->routeIs('test2')">
-                        {{ __('Test2') }}
-                    </x-nav-link>
-                    <x-nav-link>
-                        {{ __('あなたはファンです') }}
+                    <x-nav-link :href="route('work_infos.our_work')" :active="request()->routeIs('work_infos.our_work')">
+                        {{ __('完成品') }}
                     </x-nav-link>
                 </div>
                 @elseif (auth()->check() && auth()->user()->type === 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('test3')" :active="request()->routeIs('test3')">
-                        {{ __('Test3') }}
+                    <x-nav-link :href="route('idea_words.index_for_comedian')" :active="request()->routeIs('idea_words.index_for_comedian')">
+                        {{ __('アイディアボード') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('test4')" :active="request()->routeIs('test4')">
-                        {{ __('Test4') }}
-                    </x-nav-link>
-                    <x-nav-link>
-                        {{ __('あなたは芸人です') }}
+                    <x-nav-link :href="route('neta_memos.my_memos_for_comedian')" :active="request()->routeIs('neta_memos.my_memos_for_comedian')">
+                        {{ __('ネタ帳') }}
                     </x-nav-link>
                 </div>
                 @endif
-
-
-                <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('test1')" :active="request()->routeIs('test1')">
-                        {{ __('Test1') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('test2')" :active="request()->routeIs('test2')">
-                        {{ __('Test2') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('test3')" :active="request()->routeIs('test3')">
-                        {{ __('Test3') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('test4')" :active="request()->routeIs('test4')">
-                        {{ __('Test4') }}
-                    </x-nav-link>
-                </div> -->
 
             </div>
 

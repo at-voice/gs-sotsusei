@@ -41,36 +41,6 @@ require __DIR__ . '/auth.php';
 //
 // 以降追加
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// });
-
-Route::middleware(['auth', 'user_type:0'])->group(function () {
-    Route::get('/test1', function () {
-        return view('test1');
-    })->name('test1');
-
-    Route::get('/test2', function () {
-        return view('test2');
-    })->name('test2');
-
-    // ネタ帳
-    // Route::get('/for_fan/netacho', [IdeaWordController::class, 'index'])->name('idea_words.index');
-    // Route::get('/for_fan/netacho/create', [IdeaWordController::class, 'create'])->name('idea_words.create'); // 追加
-    // Route::post('/for_fan/netacho', [IdeaWordController::class, 'store'])->name('idea_words.store');
-    // Route::get('/for_fan/netacho/{id}', [IdeaWordController::class, 'show'])->name('idea_words.show');
-});
-
-Route::middleware(['auth', 'user_type:1'])->group(function () {
-    Route::get('/test3', function () {
-        return view('test3');
-    })->name('test3');
-
-    Route::get('/test4', function () {
-        return view('test4');
-    })->name('test4');
-});
-
 // Laravel Breeze のデフォルトルート
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'create'])->name('login');
@@ -84,6 +54,13 @@ Route::middleware(['auth'])->group(function () {
 
     // そのうちファン会員のみ可能
     Route::middleware(['user_type:0'])->group(function () {
+        // ナビゲーションバー
+        // ネタ帳
+        Route::get('/for_fun/netacho/index', [IdeaWordController::class, 'index_for_fun'])->name('idea_words.index_for_fun');
+        // 完成品
+        Route::get('/for_fun/our_work', [WorkInfoController::class, 'our_work_for_fun'])->name('work_infos.our_work_for_fun');
+
+
         // ネタ帳
         Route::get('/for_fan/netacho', [IdeaWordController::class, 'index_for_fan'])->name('idea_words.index_for_fan');
         Route::get('/for_fan/netacho/create', [IdeaWordController::class, 'create'])->name('idea_words.create');
@@ -96,6 +73,12 @@ Route::middleware(['auth'])->group(function () {
 
     // そのうち芸人会員のみ可能
     Route::middleware(['user_type:1'])->group(function () {
+        // ナビゲーションバー    // アイディアボード
+        Route::get('/for_comedian/netacho/index', [IdeaWordController::class, 'index_for_comedian'])->name('idea_words.index_for_comedian');
+        // ネタ帳
+        Route::get('/for_comedian/netacho/my_works', [NetaMemoController::class, 'my_works_for_comedian'])->name('neta_memos.my_works_for_comedian');
+
+
         // ネタ帳
         Route::get('/for_comedian/netacho', [IdeaWordController::class, 'index_for_comedian'])->name('idea_words.index_for_comedian'); //一覧を見る
         Route::post('/for_comedian/netacho', [NetaMemoController::class, 'store'])->name('neta_memos.store');

@@ -8,6 +8,7 @@ module.exports = {
         './resources/views/**/*.blade.php',
     ],
 
+    // darkMode: 'class', // 試しに修正
     theme: {
         extend: {
             fontFamily: {
