@@ -11,7 +11,9 @@ $navClass = auth()->user()->type === 0 ? 'bg-yellow-400 dark:bg-yellow-600' : 'b
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        <!-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" /> -->
+                        <img src="{{ asset('img/logo-icon.svg') }}" class="block h-9 w-auto" alt="ロゴ" />
+
                     </a>
                 </div>
 

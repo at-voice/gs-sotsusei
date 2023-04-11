@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Idea Words Index') }}
+            {{ __('ネタ帳') }}
         </h2>
     </x-slot>
 
@@ -39,7 +39,9 @@
                                     <tr class="hover:bg-grey-lighter">
                                         <td class="py-4 px-6 border-b border-grey-light">
                                             <div class="flex items-center space-x-4">
-                                                <input type="checkbox" name="neta_memo_ids[]" value="{{ $neta_memo->id }}" class="mt-1" onclick="addContentToNetaInfo(this, `{!! addslashes($neta_memo->content) !!}`, '{{ $neta_memo->id }}', '{{ $neta_memo->posted_by }}')">
+                                                <!-- <input type="checkbox" name="neta_memo_ids[]" value="{{ $neta_memo->id }}" class="mt-1" onclick="addContentToNetaInfo(this, `{!! addslashes($neta_memo->content) !!}`, '{{ $neta_memo->id }}', '{{ $neta_memo->posted_by }}')"> -->
+                                                <input type="checkbox" class="form-check-input neta-checkbox" data-idea-word-id="{{ $neta_memo->idea_word_id }}" data-posted-by="{{ $neta_memo->posted_by }}" id="netaCheckbox{{ $neta_memo->id }}" onchange="checkboxOnChange(this)">
+
                                                 <h3 class="text-left font-bold text-lg text-grey-dark">{{ $neta_memo->content }}</h3>
                                                 <div>
                                                     <textarea id="remarks-{{ $neta_memo->id }}" name="remarks[{{ $neta_memo->id }}]" placeholder="メモ" rows="1" cols="30" class="w-full p-2 border rounded-md">{{ $neta_memo->remarks }}</textarea>
@@ -120,46 +122,92 @@
     </div>
 
     <script>
-        function addContentToNetaInfo(checkbox, content, contentId, postedBy) {
-            const selectedContentsTextarea = document.getElementById("selected_contents");
-            const contentIdsInput = document.getElementById("content_ids");
-            const contentPostedByInput = document.getElementById("content_posted_by");
+        // function addContentToNetaInfo(checkbox, content, contentId, postedBy) {
+        //     const selectedContentsTextarea = document.getElementById("selected_contents");
+        //     const contentIdsInput = document.getElementById("content_ids");
+        //     const contentPostedByInput = document.getElementById("content_posted_by");
 
-            if (checkbox.checked) {
+        //     if (checkbox.checked) {
+        //         // チェックされた場合、contentを追加
+        //         if (selectedContentsTextarea.value === '') {
+        //             selectedContentsTextarea.value = content;
+        //             contentIdsInput.value = contentId;
+        //             contentPostedByInput.value = postedBy;
+        //         } else {
+        //             selectedContentsTextarea.value += '\n' + content;
+        //             contentIdsInput.value += ',' + contentId; // 修正された箇所
+        //             contentPostedByInput.value += ',' + postedBy;
+        //         }
+        //     } else {
+        //         // チェックが外された場合、contentを削除
+        //         const contents = selectedContentsTextarea.value.split('\n');
+        //         const contentIds = contentIdsInput.value.split(',');
+        //         const contentPostedBys = contentPostedByInput.value.split(',');
+
+        //         const index = contentIds.indexOf(contentId.toString()); // 変更
+        //         if (index > -1) {
+        //             contents.splice(index, 1);
+        //             contentIds.splice(index, 1);
+        //             contentPostedBys.splice(index, 1);
+        //         }
+
+        //         selectedContentsTextarea.value = contents.join('\n');
+        //         contentIdsInput.value = contentIds.join(',');
+        //         contentPostedByInput.value = contentPostedBys.join(',');
+        //     }
+
+        //     console.log('contentIds:', contentIdsInput.value);
+        //     console.log('contentPostedBys:', contentPostedByInput.value);
+        //     console.log('contentId:', contentId);
+        //     console.log('postedBy:', postedBy); // contentPostedBys ではなく postedBy に変更
+
+        // }
+
+        let contentIds = [];
+        let contentPostedBys = [];
+        const contentIdsInput = document.getElementById("content_ids");
+        const contentPostedByInput = document.getElementById("content_posted_by");
+
+        function checkboxOnChange(checkboxElem) {
+            // チェックボックスの data-idea-word-id と data-posted-by 属性から値を取得
+            const contentId = checkboxElem.dataset.ideaWordId;
+            const postedBy = checkboxElem.dataset.postedBy;
+            const content = checkboxElem.parentElement.querySelector("h3").textContent;
+            const selectedContentsTextarea = document.getElementById("selected_contents");
+
+            if (checkboxElem.checked) {
+                contentIds.push(contentId);
+                contentPostedBys.push(postedBy);
+
                 // チェックされた場合、contentを追加
                 if (selectedContentsTextarea.value === '') {
                     selectedContentsTextarea.value = content;
-                    contentIdsInput.value = contentId;
-                    contentPostedByInput.value = postedBy;
                 } else {
                     selectedContentsTextarea.value += '\n' + content;
-                    contentIdsInput.value += ',' + contentId; // 修正された箇所
-                    contentPostedByInput.value += ',' + postedBy;
                 }
             } else {
+                contentIds = contentIds.filter(id => id !== contentId);
+                contentPostedBys = contentPostedBys.filter(id => id !== postedBy);
+
                 // チェックが外された場合、contentを削除
                 const contents = selectedContentsTextarea.value.split('\n');
-                const contentIds = contentIdsInput.value.split(',');
-                const contentPostedBys = contentPostedByInput.value.split(',');
-
-                const index = contentIds.indexOf(contentId.toString()); // 変更
+                const index = contents.indexOf(content);
                 if (index > -1) {
                     contents.splice(index, 1);
-                    contentIds.splice(index, 1);
-                    contentPostedBys.splice(index, 1);
                 }
-
                 selectedContentsTextarea.value = contents.join('\n');
-                contentIdsInput.value = contentIds.join(',');
-                contentPostedByInput.value = contentPostedBys.join(',');
             }
 
-            // console.log('contentIds:', contentIdsInput.value);
-            // console.log('contentPostedBys:', contentPostedByInput.value);
-            // console.log('contentId:', contentId);
-            // console.log('postedBy:', postedBy); // contentPostedBys ではなく postedBy に変更
+            contentIdsInput.value = contentIds.join(',');
+            contentPostedByInput.value = contentPostedBys.join(',');
 
+            console.log('contentId:', contentId);
+            console.log('contentIds:', contentIdsInput.value);
+
+            console.log('postedBy:', postedBy);
+            console.log('contentPostedBys:', contentPostedByInput.value);
         }
     </script>
+
 
 </x-app-layout>

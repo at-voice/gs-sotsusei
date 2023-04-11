@@ -78,6 +78,10 @@ class WorkInfoController extends Controller
         // Log::info('store method called');
         // Log::info('Request data:', $request->all());
 
+        Log::info('Content IDs:', [$request->input('content_ids')]);
+        Log::info('Content Posted By:', [$request->input('content_posted_by')]);
+
+
         // バリデーション
         $request->validate([
             'title' => 'required|string|max:255',
