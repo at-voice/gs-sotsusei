@@ -58,9 +58,9 @@
                         </div>
 
                         <!-- ネタ帳に書き込むボタン -->
-                        <button type="submit" class="mt-4 px-4 py-2 font-semibold rounded transition duration-200 ease-in-out" style="background-color: #4F46E5; color: white;">
+                        <!-- <button type="submit" class="mt-4 px-4 py-2 font-semibold rounded transition duration-200 ease-in-out" style="background-color: #4F46E5; color: white;">
                             ネタ帳に書き込む
-                        </button>
+                        </button> -->
                     </form>
 
                     <!-- ネタ情報登録フォーム -->
@@ -80,8 +80,8 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="video_url" class="block mb-2">ビデオURL:</label>
-                            <input type="text" name="video_url" id="video_url" class="w-full border rounded py-2 px-3" placeholder="ビデオURLを入力してください">
+                            <label for="video_url" class="block mb-2">YouTube URL:</label>
+                            <input type="text" name="video_url" id="video_url" class="w-full border rounded py-2 px-3" placeholder="YouTube URLを入力してください">
                         </div>
                         <!-- 以下、イベント情報関連の入力フィールドを追加 -->
                         <div class="mb-4">
